@@ -1,10 +1,19 @@
-import React from 'react';
+// src/components/QuestionDisplay.tsx
+import React, { useEffect } from 'react';
 
-const QuestionDisplay: React.FC = () => {
-  const problemTitle: string = "Two Sum";
-  const problemDescription: string = "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.";
-  const exampleInput: string = "[2, 7, 11, 15], 9";
+interface QuestionDisplayProps {
+  problemTitle: string;
+  problemDescription: string;
+}
 
+
+const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ problemTitle, problemDescription }) => {
+  const exampleInput: string = "[2, 7, 11, 15], 9"; 
+
+  useEffect(() => {
+    console.log(problemTitle);
+  }, [problemTitle])
+  
   return (
     <div className="bg-white rounded-lg p-4 shadow-md h-screen">
       <h1 className="text-2xl font-bold mb-4">{problemTitle}</h1>

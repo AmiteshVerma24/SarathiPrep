@@ -12,7 +12,7 @@ const CodeEditor: React.FC = () => {
       const editor = monaco.editor.create(editorRef.current, {
         language: selectedLanguage,
         theme: 'vs-dark',
-        value: "todos",
+        value: data,
         automaticLayout: true,
       });
 
@@ -20,42 +20,25 @@ const CodeEditor: React.FC = () => {
         editor.dispose();
       };
     }
-  }, [selectedLanguage]);
+  }, [selectedLanguage, data]);
 
-  const getCode = async () => {
+  const getCode = async (language: string) => {
     try {
-        const response = await axios.get('http://localhost:3000/test');
-        console.log(response)
-        setData(""); 
-
+        const response = await axios.post('http://localhost:3000/driverCode/getDriverCode/2', {language: language});
+        const boilerPlateCode = "\n" + response.data.code.trim();
+        setData(boilerPlateCode); 
     } catch (err) {
         console.error('Error fetching data:', err);
     }
 };
 
 useEffect(() => {
-    getCode();
-}, []);
+  console.log(selectedLanguage);
+  getCode(selectedLanguage);
+}, [selectedLanguage]);
 
   const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedLanguage(event.target.value);
-  };
-
-  const getDefaultCode = (language: string): string => {
-    switch (language) {
-      case 'javascript':
-        return '// JavaScript code here';
-      case 'typescript':
-        return '// TypeScript code here';
-      case 'python':
-        return '# Python code here';
-      case 'java':
-        return '// Java code here';
-      case 'cpp':
-        return '// C++ code here';
-      default:
-        return '// Default code here';
-    }
   };
 
   return (
@@ -71,7 +54,6 @@ useEffect(() => {
             onChange={handleLanguageChange}
           >
             <option value="javascript">JavaScript</option>
-            <option value="python">Python</option>
             <option value="java">Java</option>
             <option value="cpp">C++</option>
           </select>
