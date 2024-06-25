@@ -27,10 +27,6 @@ function QuestionPage() {
       });
   }, [id]);
 
-  useEffect(() => {
-    console.log(question)
-  }, [question])
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -45,6 +41,7 @@ function QuestionPage() {
       <div className="flex justify-evenly">
         <div className="w-1/3">
           <QuestionDisplay
+            problemID={question.id}
             problemTitle={question.title}
             problemDescription={question.description}
           />

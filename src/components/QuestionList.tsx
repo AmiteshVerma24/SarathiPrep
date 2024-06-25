@@ -10,13 +10,14 @@ interface Question {
 
 const QuestionList: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
+  
 
   useEffect(() => {
     fetch('http://localhost:3000/question/getQuestions') 
       .then(response => response.json())
       .then(data => setQuestions(data))
       .catch(error => console.error('Error fetching questions:', error));
-  
+    
   }, []);
 
   useEffect(() => {

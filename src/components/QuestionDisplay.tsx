@@ -1,27 +1,37 @@
-// src/components/QuestionDisplay.tsx
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import TestCaseDisplay from './TestCaseDisplay';
 
 interface QuestionDisplayProps {
+  problemID: number;
   problemTitle: string;
   problemDescription: string;
 }
 
-
-const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ problemTitle, problemDescription }) => {
-  const exampleInput: string = "[2, 7, 11, 15], 9"; 
+const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ problemID, problemTitle, problemDescription }) => {
+  const [testcases, setTestcases] = useState([]);
+  const [loading, setLoading] = useState(true);
+  // Fetch the examples
+  useEffect(() => {
+    fetch(`http://localhost:3000/testcase/getExampleTestCases/${problemID}`) 
+    .then(response => response.json())
+    .then(data => setTestcases(data))
+    .catch(error => console.error('Error fetching questions:', error));
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
-    console.log(problemTitle);
-  }, [problemTitle])
-  
+    console.log(testcases);
+  }, [testcases])
+  if (loading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="bg-white rounded-lg p-4 shadow-md h-screen">
       <h1 className="text-2xl font-bold mb-4">{problemTitle}</h1>
       <div className="mb-4">
         <p>{problemDescription}</p>
       </div>
-      <h2 className="text-lg font-semibold mb-2">Example Input:</h2>
-      <pre className="bg-gray-100 p-2 rounded-md">{exampleInput}</pre>
+      <TestCaseDisplay testCases={testcases}/>
     </div>
   );
 };
