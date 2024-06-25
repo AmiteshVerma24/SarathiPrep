@@ -37,7 +37,6 @@ function QuestionPage() {
 
   return (
     <div>
-      <Navbar />
       <div className="flex justify-evenly">
         <div className="w-1/3">
           <QuestionDisplay

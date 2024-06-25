@@ -1,4 +1,3 @@
-// src/components/QuestionList.tsx
 import React, { useEffect, useState } from 'react';
 import QuestionItem from './QuestionItem';
 
