@@ -1,5 +1,5 @@
-import LandingPage from "./LandingPage";
+import QuestionPage from "./QuestionPage";
 import LoginPage from "./LoginPage";
 import SignupPage from "./SignupPage";
 
-export {LandingPage, LoginPage, SignupPage}
+export {QuestionPage as LandingPage, LoginPage, SignupPage}
