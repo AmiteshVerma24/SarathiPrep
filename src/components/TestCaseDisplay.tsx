@@ -15,7 +15,7 @@ interface TestCaseDisplayProps {
 
 const TestCaseDisplay: React.FC<TestCaseDisplayProps> = ({ testCases }) => {
   return (
-    <div className="bg-white rounded-lg p-4 shadow-md h-screen">
+    <div className="bg-white rounded-lg p-4 shadow-md">
       <h2 className="text-xl font-bold mb-4">Sample Test Cases</h2>
       {testCases.map(testCase => (
         <div key={testCase.id} className="mb-4 p-4 border rounded-lg">

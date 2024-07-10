@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import TestCaseDisplay from './TestCaseDisplay';
 
+
 interface QuestionDisplayProps {
   problemID: number;
   problemTitle: string;
@@ -31,7 +32,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ problemID, problemTit
       <div className="mb-4">
         <p>{problemDescription}</p>
       </div>
-      <TestCaseDisplay testCases={testcases}/>
+      <TestCaseDisplay testCases={testcases} />
     </div>
   );
 };

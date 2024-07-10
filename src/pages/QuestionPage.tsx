@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Navbar, CodeEditor, QuestionDisplay } from '../components';
+import { CodeEditor, QuestionDisplay } from '../components';
 import { useParams } from 'react-router-dom';
 
 interface Question {
@@ -37,15 +37,15 @@ function QuestionPage() {
 
   return (
     <div>
-      <div className="flex justify-evenly">
-        <div className="w-1/3">
+      <div className="flex h-screen">
+        <div className="w-1/3 h-full flex flex-col">
           <QuestionDisplay
             problemID={question.id}
             problemTitle={question.title}
             problemDescription={question.description}
           />
         </div>
-        <div className="w-2/3">
+        <div className="w-2/3 h-full flex flex-col">
           <CodeEditor />
         </div>
       </div>

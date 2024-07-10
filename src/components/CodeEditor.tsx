@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import * as monaco from 'monaco-editor';
 import axios from 'axios';
+import { Button } from "@/components/ui/button"
+
 
 const CodeEditor: React.FC = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
@@ -42,24 +44,27 @@ useEffect(() => {
   };
 
   return (
-    <div className="bg-white rounded-lg p-4 shadow-md h-screen overflow-auto">
+    <div className="bg-white rounded-lg p-4 shadow-md h-screen flex flex-col">
       <div className="flex items-center justify-between mb-4">
-        <div className="text-lg font-semibold">Code Editor</div>
-        <div>
-          <label htmlFor="language" className="mr-2">Select Language:</label>
-          <select
-            id="language"
-            className="px-2 py-1 border rounded-md"
-            value={selectedLanguage}
-            onChange={handleLanguageChange}
-          >
-            <option value="javascript">JavaScript</option>
-            <option value="java">Java</option>
-            <option value="cpp">C++</option>
-          </select>
+      <div>
+            <label htmlFor="language" className="mr-2">Select Language:</label>
+            <select
+              id="language"
+              className="px-2 py-1 border rounded-md"
+              value={selectedLanguage}
+              onChange={handleLanguageChange}
+            >
+              <option value="javascript">JavaScript</option>
+              <option value="java">Java</option>
+              <option value="cpp">C++</option>
+            </select>
+        </div>
+        <div className="flex gap-4">
+          <Button variant="secondary" className="bg-slate-700 p-4 rounded-lg text-white">Test Code</Button>
+          <Button variant="outline" className="bg-slate-400 p-4 rounded-lg text-white">Submit</Button>
         </div>
       </div>
-      <div className="h-full" ref={editorRef}></div>
+      <div className="flex-grow p-2 mb-4" ref={editorRef}></div>
     </div>
   );
 };
