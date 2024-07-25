@@ -1,31 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import TestCaseDisplay from './TestCaseDisplay';
 
+interface TestCase {
+  id: number;
+  question_id: number;
+  input: string;
+  expected_output: string;
+  created_at: string;
+  sample: boolean;
+}
 
 interface QuestionDisplayProps {
   problemID: number;
   problemTitle: string;
   problemDescription: string;
+  testcases: TestCase[];
 }
 
-const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ problemID, problemTitle, problemDescription }) => {
-  const [testcases, setTestcases] = useState([]);
-  const [loading, setLoading] = useState(true);
-  // Fetch the examples
-  useEffect(() => {
-    fetch(`http://localhost:3000/testcase/getExampleTestCases/${problemID}`) 
-    .then(response => response.json())
-    .then(data => setTestcases(data))
-    .catch(error => console.error('Error fetching questions:', error));
-    setLoading(false);
-  }, []);
-
-  useEffect(() => {
-    console.log(testcases);
-  }, [testcases])
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+const QuestionDisplay: React.FC<QuestionDisplayProps> = ({ problemTitle, problemDescription, testcases }) => {
   return (
     <div className="bg-white rounded-lg p-4 shadow-md h-screen">
       <h1 className="text-2xl font-bold mb-4">{problemTitle}</h1>

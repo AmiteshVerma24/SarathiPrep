@@ -9,23 +9,54 @@ interface Question {
   difficulty: string;
 }
 
+interface TestCase {
+  id: number;
+  question_id: number;
+  input: string;
+  expected_output: string;
+  created_at: string;
+  sample: boolean;
+}
+
 function QuestionPage() {
   const { id } = useParams<{ id: string }>();
   const [question, setQuestion] = useState<Question | null>(null);
+  const [testcases, setTestcases] = useState<TestCase[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/question/getQuestion/${id}`)
-      .then(response => response.json())
-      .then(data => {
+    const fetchQuestion = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/question/getQuestion/${id}`);
+        const data = await response.json();
         setQuestion(data[0]);
-        setLoading(false);
-      })
-      .catch(error => {
+      } catch (error) {
         console.error('Error fetching question:', error);
-        setLoading(false);
-      });
+      }
+    };
+    const fetchTestcases = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/testcase/getExampleTestCases/${id}`);
+        const data = await response.json();
+        setTestcases(data);
+      } catch (error) {
+        console.error('Error fetching testcases:', error);
+      }
+    };
+    const fetchData = async () => {
+      setLoading(true);
+      await Promise.all([fetchQuestion(), fetchTestcases()]);
+      setLoading(false);
+    };
+  
+    fetchData();
   }, [id]);
+
+  useEffect(() => {
+    if (!loading) {
+      console.log("Testcases:- ", testcases);
+    }
+  }, [loading, testcases]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -43,10 +74,16 @@ function QuestionPage() {
             problemID={question.id}
             problemTitle={question.title}
             problemDescription={question.description}
+            testcases={testcases}
           />
         </div>
         <div className="w-2/3 h-full flex flex-col">
-          <CodeEditor />
+          <CodeEditor 
+            problemID={question.id}
+            problemTitle={question.title}
+            problemDescription={question.description}
+            testcases={testcases}
+          />
         </div>
       </div>
     </div>

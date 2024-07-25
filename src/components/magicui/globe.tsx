@@ -1,6 +1,5 @@
 import { cn } from "../../../lib/utils";
 import createGlobe, { COBEOptions } from "cobe";
-import React from "react";
 import { useCallback, useEffect, useRef } from "react";
 import { useSpring } from "react-spring";
 
